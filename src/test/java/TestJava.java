@@ -1,23 +1,34 @@
+
+import Applications.DAO.UserDAO;
+import Applications.model.Passport;
 import Applications.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.Objects;
 
 public class TestJava{
     public static void main(String[] args) {
-        Configuration configuration= new Configuration().addAnnotatedClass(User.class);
-        SessionFactory sessionFactory = configuration.buildSessionFactory();
+        SessionFactory sessionFactory = new Configuration().addAnnotatedClass(User.class)
+                .addAnnotatedClass(Passport.class).buildSessionFactory();
         Session session = sessionFactory.getCurrentSession();
         try{
             session.beginTransaction();
 
-session.persist(new User());
-
+Passport passport = session.find(Passport.class, 1);
+            session.remove(passport);
             session.getTransaction().commit();
+
 
         }finally {
             session.close();
             sessionFactory.close();
         }
+
     }
 }
