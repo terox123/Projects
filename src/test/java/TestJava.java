@@ -1,16 +1,10 @@
 
-import Applications.DAO.UserDAO;
 import Applications.model.Passport;
 import Applications.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
-import org.springframework.jdbc.core.JdbcTemplate;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
 
 public class TestJava{
     public static void main(String[] args) {
