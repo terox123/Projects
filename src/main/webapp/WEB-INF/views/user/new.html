@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>NewUser</title>
+</head>
+<body>
+
+<form th:method="POST" th:action="@{/users}" th:object="${user}">
+<label for="name">Enter name:</label>
+<input type="text" th:field="*{name}" id="name" required>
+    <div style="color:red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"> Name Error</div>
+    <br/>
+
+    <label for="email">Enter email:</label>
+    <input type="text" th:field="*{email}" id="email" required>
+    <div style="color:red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"> Email Error</div>
+    <br/>
+
+
+
+
+    <input type="submit" value="Create User">
+</form>
+
+
+</body>
+</html>

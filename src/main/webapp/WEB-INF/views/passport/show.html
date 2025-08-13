@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Show</title>
+</head>
+<body>
+<p>Passport Details</p>
+
+<div th:if="${passport != null}">
+
+  <p> ID: <span th:text="${passport.getOwner().getId()}">ID</span></p>
+  <p> Name: <span th:text="${passport.getOwner().getName()}">Name</span></p>
+  <p> Email: <span th:text="${passport.getOwner().getEmail()}">Email</span></p>
+  <p> Created: <span th:text="${passport.getOwner().getFormattedCreatedAt()}">Created</span></p>
+  <p>Passport Data: <span th:text="${passport.toString()}">Passport</span></p>
+
+</div>
+
+<div th:if="${passport == null}">
+  No user found.
+</div>
+
+</body>
+</html>

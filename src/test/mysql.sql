@@ -1,0 +1,1 @@
+update passport set controlDigit = 1 where id = 2

@@ -1,0 +1,87 @@
+# Операционные системы
+.DS_Store
+Thumbs.db
+
+# Логи
+*.log
+
+# Системные файлы
+*.swp
+*.swo
+*.tmp
+*.bak
+
+# IDE и редакторы
+.idea/
+*.iml
+*.classpath
+*.project
+.vscode/
+*.sublime-workspace
+*.sublime-project
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+target/
+build/
+*.log
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+env/
+venv/
+*.egg-info/
+
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Ruby
+*.gem
+*.rbc
+/.bundle/
+log/
+tmp/
+vendor/
+
+# PHP
+vendor/
+*.log
+*.cache
+
+# Miscellaneous
+*.tgz
+*.zip
+*.tar.gz
+*.rar
+*.7z
+*.bak
+*.orig
+*.swp
+*.swo
+*.tmp
+*.DS_Store
+*.class
+*.jar
+*.war
+*.ear
+*.pdb
+*.obj
+*.exe
+*.dll
+*.so
+*.dSYM/
+*.class
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
