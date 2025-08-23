@@ -28,6 +28,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
+                .authenticationProvider(authProvider)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/", "/first/**", "/css/**", "/js/**").permitAll()
                         .requestMatchers("/users/**", "/passports/**").authenticated()
