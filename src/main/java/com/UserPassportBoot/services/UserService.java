@@ -4,19 +4,25 @@ package com.UserPassportBoot.services;
 import com.UserPassportBoot.DAO.UserDAO;
 import com.UserPassportBoot.model.User;
 import com.UserPassportBoot.repositories.UserRepository;
+import com.UserPassportBoot.security.UserDetailsClass;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 
 @Service
 @Transactional(readOnly = true)
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
 private final UserDAO userDAO;
@@ -71,4 +77,15 @@ public Page<User> findAllUsersSortedByBirthDateDesc(Pageable pageable){
     }
 
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+Optional<User> user = userRepository.findByName(username);
+if(user.isEmpty()){
+    throw new UsernameNotFoundException("UserName not found");
 }
+
+return new UserDetailsClass(user.get());
+
+    }
+}
+

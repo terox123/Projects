@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>ShowUser </title>
+</head>
+<body>
+
+<p>User Details</p>
+
+<div th:if="${user != null}">
+
+    <p> ID: <span th:text="${user.getId()}">ID</span></p>
+    <p> Name: <span th:text="${user.getName()}">Name</span></p>
+    <p> Email: <span th:text="${user.getEmail()}">Email</span></p>
+    <p> Created: <span th:text="${user.getFormattedCreatedAt()}">Created</span></p>
+    <p> Date Of Birth: <span th:text="${user.getFormattedDateOfBirth()}">Date of Birth</span></p>
+    <p> Gender: <span th:text="${user.getGender()}">Gender</span></p>
+    <p> Password: <span th:text="${user.getPassword()}" Password></span></p>
+</div>
+<div th:if="${passport != null}">
+    <p>Passport: Serial: <span th:text="${passport.getSerial()}">Passport</span>,
+    Number: <span th:text="${passport.getNumber()}">123456789</span></p>
+</div>
+
+<div th:if="${passport == null}">
+    <p>No passport</p>
+</div>
+
+
+<div th:if="${user == null}">
+    No user found.
+</div>
+
+</body>
+</html>
