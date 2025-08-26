@@ -69,8 +69,6 @@ public Page<Passport> searchPassportByStartingWith(String characters, Pageable p
 
     @Transactional
     public void delete(int id) {
-        Integer maxId = jdbcTemplate.queryForObject("SELECT MAX(id) from passport where id = ?", Integer.class, id);
         passportRepository.deleteById(id);
-        passportDAO.setIDAfterDelete(maxId);
     }
 }

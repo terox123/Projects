@@ -1,11 +1,11 @@
 package com.UserPassportBoot.config;
 
-import com.UserPassportBoot.security.AuthProviderImpl;
+import com.UserPassportBoot.services.MyUserDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -14,31 +14,43 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    private final AuthProviderImpl authProvider;
 
-    public SecurityConfig(AuthProviderImpl authProvider) {
-        this.authProvider = authProvider;
+    private final MyUserDetailsService myUserDetailsService;
+
+    @Autowired
+    public SecurityConfig(MyUserDetailsService myUserDetailsService) {
+        this.myUserDetailsService = myUserDetailsService;
     }
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    protected PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .authenticationProvider(authProvider)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "/first/**", "/css/**", "/js/**").permitAll()
-                        .requestMatchers("/users/**", "/passports/**").authenticated()
+                        .requestMatchers( "/", "/auth/login", "/auth/registration",
+                                "/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers("/", "/users/**", "/passports/**").authenticated()
                         .anyRequest().permitAll()
                 )
                 .formLogin(form -> form
-                        .loginPage("/login")
+                        .loginPage("/auth/login")
+                        .loginProcessingUrl("/process_login")
+                        .defaultSuccessUrl("/", true)
+                        .failureUrl("/auth/login?error")
                         .permitAll()
                 )
-                .csrf(AbstractHttpConfigurer::disable);
+
+                .logout(log -> log
+                        .logoutUrl("/logout")
+                        .logoutSuccessUrl("/auth/login")
+                )
+
+
+                .userDetailsService(myUserDetailsService);
 
         return http.build();
     }

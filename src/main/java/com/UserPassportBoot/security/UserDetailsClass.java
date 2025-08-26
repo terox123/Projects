@@ -4,9 +4,10 @@ import com.UserPassportBoot.model.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.Collections;
 
 public class UserDetailsClass implements UserDetails{
 
@@ -18,7 +19,7 @@ private final User user;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return Collections.emptyList();
     }
 
     @Override
@@ -51,7 +52,7 @@ private final User user;
         return true;
     }
 // для аутентификации
-    public User getUSer(){
+    public User getUser(){
         return this.user;
     }
 

@@ -42,7 +42,7 @@ public class User {
 @NotEmpty(message = "Gender can't be empty")
 private String gender;
 
-@Column(name = "password")
+@Column(name = "password", length = 100)  // шифрование bCrypt
 @NotEmpty(message = "Password can't be empty")
 private String password;
 

@@ -45,35 +45,7 @@ public class Passport {
     private String statusOfPassport;
 
 
-    public static boolean isValid(String serial, String number) {
-        if (serial == null || number == null || serial.length() != 4 || number.length() != 6) {
-            return false;
-        }
 
-        String coefficients = "731731731";
-        String first9Digits = serial + number.substring(0, 5);
-
-        int sum = 0;
-        for (int i = 0; i < 9; i++) {
-            int digit = Character.getNumericValue(first9Digits.charAt(i));
-            int coefficient = Character.getNumericValue(coefficients.charAt(i));
-
-            if (digit < 0 || digit > 9 || coefficient < 0 || coefficient > 9) {
-                return false;
-            }
-
-            sum += digit * coefficient;
-        }
-
-        int calculatedControl = sum % 10;
-        int actualControl = Character.getNumericValue(number.charAt(5));
-
-        if (actualControl < 0 || actualControl > 9) {
-            return false;
-        }
-
-        return calculatedControl == actualControl;
-    }
 
     public Passport() {
         this.dateOfReceipt = LocalDate.now();
@@ -92,9 +64,6 @@ public class Passport {
 
     public Passport(String serial, String number, User owner) {
         this();
-//        if (!isValid(serial, number)) {
-//            throw new IllegalArgumentException("Invalid passport data");
-//        }
         this.serial = serial;
         this.number = number;
         this.owner = owner;
@@ -142,7 +111,7 @@ public class Passport {
 
     private int calculateControlDigit(String serial, String number) {
         if (serial == null || number == null || serial.length() != 4 || number.length() != 6) {
-            throw new IllegalStateException("Cannot calculate control digit - invalid serial or number");
+            System.out.println("Can't to count control digit, invalid serial and number");
         }
 
         String coefficients = "731731731";

@@ -3,6 +3,8 @@ package com.UserPassportBoot.repositories;
 
 import com.UserPassportBoot.model.Passport;
 import com.UserPassportBoot.model.User;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -25,4 +27,5 @@ public interface PassportRepository extends JpaRepository<Passport, Integer> {
     @Query("select p from Passport p where p.number like concat(:numberPart, '%')")
     Page<Passport> searchPassportByNumberStartingWith(@Param("numberPart") String numberPart, Pageable pageable);
 
+    Optional<Passport> findBySerialAndNumber(String serial, String number);
 }

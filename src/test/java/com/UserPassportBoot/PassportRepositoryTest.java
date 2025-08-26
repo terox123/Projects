@@ -120,4 +120,13 @@ public class PassportRepositoryTest {
     }
 
 
+    @Test
+    void findBySerialAndNumber_ShouldReturnUser_WhenExists(){
+        Optional<Passport> foundPassport = passportRepository.findBySerialAndNumber("9219", "762108");
+
+        assertThat(foundPassport).isPresent();
+        assertThat(foundPassport.get().getOwner()).isEqualTo(testUser1);
+    }
+
+
 }
