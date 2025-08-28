@@ -5,6 +5,7 @@
 </head>
 <body>
 <h1>New Passport</h1>
+
 <form th:action="@{/passports}" th:object="${passport}" method="post">
   <div> <label for="owner">Owner of a passport:</label>
     <select id="owner" name="ownerId">
@@ -14,6 +15,8 @@
               th:text="${user.getName()}"></option>
     </select>
   </div>
+
+
   <div>
     <label for="serial">Serial of a passport:</label>
     <input type="text" id="serial" th:field="*{serial}" placeholder="1234" maxlength="4" required />

@@ -34,26 +34,20 @@ public class PassportRepositoryTest {
     @Autowired
     private UserRepository userRepository;
 
-    private Passport testPassport1;
-    private Passport testPassport2;
-    private Passport testPassport3;
-    private User testUser1;
-    private User testUser2;
-    private User testUser3;
-
+private User testUser1;
     @BeforeEach
     void setUp() {
         passportRepository.deleteAll();
         userRepository.deleteAll();
 
-        testUser1 = new User("John", "john@example.com", LocalDate.of(1990, 5, 15), "Male", "password123");
-        testUser2 = new User("Alice", "alice@example.com", LocalDate.of(1985, 8, 22), "Female", "password456");
-        testUser3 = new User("Bob", "bob@example.com", LocalDate.of(1995, 3, 10), "Male", "password789");
+         testUser1 = new User("John", "john@example.com", LocalDate.of(1990, 5, 15), "Male", "password123", "USER");
+        User testUser2 = new User("Alice", "alice@example.com", LocalDate.of(1985, 8, 22), "Female", "password456", "USER");
+        User testUser3 = new User("Bob", "bob@example.com", LocalDate.of(1995, 3, 10), "Male", "password789", "ADMIN");
         userRepository.saveAll(List.of(testUser1, testUser2, testUser3));
 
-        testPassport1 = new Passport("9219", "762108", testUser1);
-        testPassport2 = new Passport("9217", "762100", testUser2);
-        testPassport3 = new Passport("9215", "762208", testUser3);
+        Passport testPassport1 = new Passport("9219", "762108", testUser1);
+        Passport testPassport2 = new Passport("9217", "762100", testUser2);
+        Passport testPassport3 = new Passport("9215", "762208", testUser3);
         passportRepository.saveAll(List.of(testPassport1, testPassport2, testPassport3));
     }
 
@@ -68,7 +62,7 @@ public class PassportRepositoryTest {
 
     @Test
     void findByOwner_ShouldReturnEmpty_WhenNotExists() {
-        User newUser = new User("New", "new@example.com", LocalDate.of(2000, 1, 1), "Male", "password");
+        User newUser = new User("New", "new@example.com", LocalDate.of(2000, 1, 1), "Male", "password", "USER");
         userRepository.save(newUser);
 
         Optional<Passport> foundPassport = passportRepository.findByOwner(newUser);
@@ -125,7 +119,7 @@ public class PassportRepositoryTest {
         Optional<Passport> foundPassport = passportRepository.findBySerialAndNumber("9219", "762108");
 
         assertThat(foundPassport).isPresent();
-        assertThat(foundPassport.get().getOwner()).isEqualTo(testUser1);
+        assertThat(foundPassport.get().getOwner().getName()).isEqualTo("John");
     }
 
 

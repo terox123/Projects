@@ -19,7 +19,8 @@
     You have been logged out successfully
 </div>
 
-<form th:action="@{/process_login}" method="post">
+<form th:action="@{/process_login}" th:method="post">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
     <div>
         <label for="username">Username:</label>
         <input type="text" id="username" name="username" required>

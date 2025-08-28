@@ -85,7 +85,7 @@ public class PassportController {
     }
 
     @GetMapping("/new")
-    public String newPassport(@ModelAttribute("passport")  Passport passport,
+    public String newPassport(@ModelAttribute("passport") Passport passport,
                               Model model,
                               @PageableDefault(size = DEFAULT_PAGE_SIZE) Pageable pageable) {
         model.addAttribute("users", userService.findAllUsers(pageable));
@@ -97,18 +97,23 @@ public class PassportController {
                        BindingResult bindingResult,
                        @RequestParam("ownerId") Integer ownerId,
                        Model model,
-                       @PageableDefault(size = DEFAULT_PAGE_SIZE) Pageable pageable) {
-
+                       @PageableDefault() Pageable pageable) {
         passportValidator.validate(passport, bindingResult);
 
-        if (bindingResult.hasErrors()) {
+        if (ownerId == null) {
+            bindingResult.rejectValue("owner", "error.passport", "Owner must be selected");
             model.addAttribute("users", userService.findAllUsers(pageable));
             return "passport/new";
         }
 
-        User owner = userService.findUserById(ownerId);
-        passport.setOwner(owner);
+        User user = userService.findUserById(ownerId);
+        if (user.getPassport() != null) {
+            bindingResult.rejectValue("owner", "error.passport", "User already has a passport");
+            model.addAttribute("users", userService.findAllUsers(pageable));
+            return "passport/new";
+        }
 
+        passport.setOwner(user);
         passportService.save(passport);
         return "redirect:/passports";
     }

@@ -73,6 +73,7 @@ return "user/new";
         return "user/new";
 
     userService.save(user);
+
         return "redirect:/users";
     }
 
