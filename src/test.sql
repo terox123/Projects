@@ -1,0 +1,1 @@
+update java_users set role='ROLE_USER' where id = 19
